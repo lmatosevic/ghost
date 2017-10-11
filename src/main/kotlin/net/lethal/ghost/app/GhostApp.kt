@@ -1,6 +1,6 @@
 package net.lethal.ghost.app
 
-import net.lethal.ghost.view.MainView
+import net.lethal.ghost.controller.MainController
 import tornadofx.App
 
-class GhostApp: App(MainView::class, Styles::class)
+class GhostApp: App(MainController::class, Styles::class)
