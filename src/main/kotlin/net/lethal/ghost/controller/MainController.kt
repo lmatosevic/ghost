@@ -1,15 +1,36 @@
 package net.lethal.ghost.controller
 
-import javafx.scene.control.Label
 import javafx.scene.layout.VBox
+import net.lethal.ghost.app.Context
+import net.lethal.ghost.service.LoggerService
 import tornadofx.*
 
-class MainController : View("Sample app") {
+class MainController : View(Context.windowName) {
     override val root: VBox = loadFXML("/views/MainView.fxml", true)
+//    private val nameLabel: Label by fxid()
+    private val logger: LoggerService by di()
 
-    private val nameLabel: Label by fxid()
+    fun play() {
+        logger.info("Play pressed")
+    }
 
-    fun changeName() {
-        nameLabel.text = "new value"
+    fun pause() {
+        logger.info("Pause pressed")
+    }
+
+    fun stop() {
+        logger.info("Stop pressed")
+    }
+
+    fun record() {
+        logger.info("Record pressed")
+    }
+
+    fun save() {
+        logger.info("Save pressed")
+    }
+
+    fun open() {
+        logger.info("Open pressed")
     }
 }

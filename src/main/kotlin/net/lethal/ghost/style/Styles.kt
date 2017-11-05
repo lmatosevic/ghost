@@ -1,4 +1,4 @@
-package net.lethal.ghost.app
+package net.lethal.ghost.style
 
 import javafx.scene.text.FontWeight
 import tornadofx.Stylesheet

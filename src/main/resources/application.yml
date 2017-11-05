@@ -1,0 +1,5 @@
+info:
+  artifact: ghost
+  name: Ghost
+  description: Gui application for imitating mouse and keyboard actions
+  version: 1.0-SNAPSHOT
