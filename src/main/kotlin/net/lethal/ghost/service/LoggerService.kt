@@ -2,7 +2,7 @@ package net.lethal.ghost.service
 
 interface LoggerService {
 
-    fun info(text: String)
+    fun info(message: String)
 
-    fun error(text: String)
+    fun error(message: String)
 }

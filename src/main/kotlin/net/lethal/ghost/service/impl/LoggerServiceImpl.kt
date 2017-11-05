@@ -4,7 +4,7 @@ import net.lethal.ghost.service.LoggerService
 
 class LoggerServiceImpl : LoggerService {
 
-    override fun info(text: String) = println(text)
+    override fun info(message: String) = println("INFO: $message")
 
-    override fun error(text: String) = System.err.println(text)
+    override fun error(message: String) = System.err.println("ERROR: $message")
 }
