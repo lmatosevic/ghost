@@ -1,45 +1,59 @@
 package net.lethal.ghost.service.impl
 
+import net.lethal.ghost.event.Event
+import net.lethal.ghost.event.EventSubscriber
+import net.lethal.ghost.event.action.mouse.*
+import net.lethal.ghost.event.type.MouseEvent
 import net.lethal.ghost.service.LoggerService
 import org.jnativehook.GlobalScreen
 import org.jnativehook.mouse.*
+import java.util.*
 
 class MouseListenerService : ListenerService(), NativeMouseInputListener, NativeMouseMotionListener, NativeMouseWheelListener {
     private val logger: LoggerService by di()
 
-    override fun registerListeners() {
+    override fun registerSelf() {
         GlobalScreen.addNativeMouseListener(this)
         GlobalScreen.addNativeMouseMotionListener(this)
         GlobalScreen.addNativeMouseWheelListener(this)
     }
 
-    override fun removeListeners() {
+    override fun removeSelf() {
         GlobalScreen.removeNativeMouseListener(this)
         GlobalScreen.removeNativeMouseMotionListener(this)
         GlobalScreen.removeNativeMouseWheelListener(this)
     }
 
-    override fun nativeMouseMoved(p0: NativeMouseEvent?) {
-//        logger.info("Mouse moved")
+    override fun notifySubscriber(subscriber: EventSubscriber, event: Event) {
+        subscriber.onMouseEvent(event as MouseEvent)
     }
 
-    override fun nativeMouseDragged(p0: NativeMouseEvent?) {
-        if (!paused) logger.info("Mouse dragged")
+    override fun nativeMouseMoved(event: NativeMouseEvent?) {
+        if (paused) return
+        notifySubscribers(MouseEvent(Date(), Date(), MouseMovedAction()))
     }
 
-    override fun nativeMousePressed(p0: NativeMouseEvent?) {
-        if (!paused) logger.info("Mouse pressed")
+    override fun nativeMouseDragged(event: NativeMouseEvent?) {
+        if (paused) return
+        notifySubscribers(MouseEvent(Date(), Date(), MouseDraggedAction()))
     }
 
-    override fun nativeMouseClicked(p0: NativeMouseEvent?) {
-        if (!paused) logger.info("Mouse clicked")
+    override fun nativeMousePressed(event: NativeMouseEvent?) {
+        if (paused) return
+        notifySubscribers(MouseEvent(Date(), Date(), MousePressedAction()))
     }
 
-    override fun nativeMouseReleased(p0: NativeMouseEvent?) {
-        if (!paused) logger.info("Mouse released")
+    override fun nativeMouseReleased(event: NativeMouseEvent?) {
+        if (paused) return
+        notifySubscribers(MouseEvent(Date(), Date(), MouseReleasedAction()))
     }
 
-    override fun nativeMouseWheelMoved(p0: NativeMouseWheelEvent?) {
-        if (!paused) logger.info("Mouse wheel moved")
+    override fun nativeMouseWheelMoved(event: NativeMouseWheelEvent?) {
+        if (paused) return
+        notifySubscribers(MouseEvent(Date(), Date(), MouseWheelAction()))
+    }
+
+    override fun nativeMouseClicked(event: NativeMouseEvent?) {
+        // ignored
     }
 }

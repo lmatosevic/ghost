@@ -84,10 +84,10 @@
         </HBox>
         <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="100.0">
             <children>
-                <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                <ImageView fx:id="keyboardImg" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                     <Image url="@../images/keyboard.png" />
                 </ImageView>
-                <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                <ImageView fx:id="mouseImg" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                     <Image url="@../images/mouse.png" />
                 </ImageView>
             </children>
