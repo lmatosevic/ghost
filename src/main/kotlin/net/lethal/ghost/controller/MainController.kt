@@ -10,7 +10,6 @@ import tornadofx.*
 class MainController : View(Context.windowName) {
     override val root: VBox = loadFXML("/views/MainView.fxml", true)
 //    private val nameLabel: Label by fxid()
-
     private val logger: LoggerService by di()
     private val keyboardListener: KeyboardListenerService by di()
     private val mouseListener: MouseListenerService by di()

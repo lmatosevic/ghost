@@ -8,8 +8,6 @@ import javafx.application.Platform
 import net.lethal.ghost.config.Configuration
 import net.lethal.ghost.controller.MainController
 import net.lethal.ghost.service.LoggerService
-import net.lethal.ghost.service.impl.KeyboardListenerService
-import net.lethal.ghost.service.impl.MouseListenerService
 import net.lethal.ghost.service.impl.NativeDispatchService
 import net.lethal.ghost.style.Styles
 import org.jnativehook.GlobalScreen
@@ -22,14 +20,10 @@ import kotlin.reflect.KClass
 
 class GhostApp : App(MainController::class, Styles::class) {
     private val logger: LoggerService
-    private val keyboardListener: KeyboardListenerService
-    private val mouseListener: MouseListenerService
 
     init {
         val guice = Guice.createInjector(GhostModule())
         logger = guice.getInstance(LoggerService::class.java)
-        keyboardListener = guice.getInstance(KeyboardListenerService::class.java)
-        mouseListener = guice.getInstance(MouseListenerService::class.java)
 
         FX.dicontainer = object : DIContainer {
             override fun <T : Any> getInstance(type: KClass<T>) = guice.getInstance(type.java)
@@ -44,7 +38,6 @@ class GhostApp : App(MainController::class, Styles::class) {
 
     override fun onBeforeShow(view: UIComponent) {
         super.onBeforeShow(view)
-
         try {
             GlobalScreen.registerNativeHook()
             FX.primaryStage.setOnCloseRequest {
@@ -55,11 +48,6 @@ class GhostApp : App(MainController::class, Styles::class) {
             logger.error(ex.message.toString())
             Platform.exit()
         }
-
-        GlobalScreen.addNativeKeyListener(keyboardListener)
-        GlobalScreen.addNativeMouseListener(mouseListener)
-        GlobalScreen.addNativeMouseMotionListener(mouseListener)
-        GlobalScreen.addNativeMouseWheelListener(mouseListener)
     }
 }
 
