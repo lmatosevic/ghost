@@ -28,12 +28,12 @@ class KeyboardListenerService : ListenerService(), NativeKeyListener {
 
     override fun nativeKeyPressed(event: NativeKeyEvent?) {
         if (paused) return
-        notifySubscribers(KeyboardEvent(Date(), Date(), KeyPressedAction()))
+        notifySubscribers(KeyboardEvent(Date(), Date(), KeyPressedAction(event?.keyCode)))
     }
 
     override fun nativeKeyReleased(event: NativeKeyEvent?) {
         if (paused) return
-        notifySubscribers(KeyboardEvent(Date(), Date(), KeyReleasedAction()))
+        notifySubscribers(KeyboardEvent(Date(), Date(), KeyReleasedAction(event?.keyCode)))
     }
 
     override fun nativeKeyTyped(event: NativeKeyEvent?) {

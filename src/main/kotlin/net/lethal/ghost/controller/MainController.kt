@@ -9,9 +9,8 @@ import net.lethal.ghost.app.Context
 import net.lethal.ghost.event.DeviceType
 import net.lethal.ghost.event.Event
 import net.lethal.ghost.event.EventSubscriber
-import net.lethal.ghost.event.type.KeyboardEvent
-import net.lethal.ghost.event.type.MouseEvent
 import net.lethal.ghost.service.LoggerService
+import net.lethal.ghost.service.ScenarioHolderService
 import net.lethal.ghost.service.impl.KeyboardListenerService
 import net.lethal.ghost.service.impl.MouseListenerService
 import tornadofx.*
@@ -25,6 +24,7 @@ class MainController : View(Context.windowName), EventSubscriber {
     private val logger: LoggerService by di()
     private val keyboardListener: KeyboardListenerService by di()
     private val mouseListener: MouseListenerService by di()
+    private val scenarioHolder: ScenarioHolderService by di()
 
     private var mouseLastEvent: Long = System.currentTimeMillis()
     private var keyboardLastEvent: Long = System.currentTimeMillis()
@@ -43,12 +43,6 @@ class MainController : View(Context.windowName), EventSubscriber {
 
     override fun onEvent(event: Event) {
         changeImageColor(event.device)
-    }
-
-    override fun onKeyboardEvent(keyboardEvent: KeyboardEvent) {
-    }
-
-    override fun onMouseEvent(mouseEvent: MouseEvent) {
     }
 
     fun play() {
@@ -79,10 +73,12 @@ class MainController : View(Context.windowName), EventSubscriber {
 
     fun save() {
         logger.info("Save pressed")
+        scenarioHolder.save()
     }
 
     fun open() {
         logger.info("Open pressed")
+        scenarioHolder.load()
     }
 
     private fun changeImageColor(deviceType: DeviceType) {

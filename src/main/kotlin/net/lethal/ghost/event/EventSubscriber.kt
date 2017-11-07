@@ -7,7 +7,7 @@ interface EventSubscriber {
 
     fun onEvent(event: Event) {}
 
-    fun onKeyboardEvent(keyboardEvent: KeyboardEvent)
+    fun onKeyboardEvent(keyboardEvent: KeyboardEvent) {}
 
-    fun onMouseEvent(mouseEvent: MouseEvent)
+    fun onMouseEvent(mouseEvent: MouseEvent) {}
 }

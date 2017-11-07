@@ -1,7 +1,12 @@
 package net.lethal.ghost.event.action.mouse
 
+import net.lethal.ghost.event.action.AbstractAction
 import net.lethal.ghost.event.action.Action
+import net.lethal.ghost.event.action.ActionType
 
-class MouseDraggedAction : Action {
-    override val name: String = "Mouse dragged"
+class MouseDraggedAction : AbstractAction(), Action {
+    override val type: ActionType = ActionType.MOUSE_DRAGGED
+
+    override fun execute() {
+    }
 }

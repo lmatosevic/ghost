@@ -7,4 +7,6 @@ class LoggerServiceImpl : LoggerService {
     override fun info(message: String) = println("INFO: $message")
 
     override fun error(message: String) = System.err.println("ERROR: $message")
+
+    override fun warning(message: String) = println("WARNING: $message")
 }

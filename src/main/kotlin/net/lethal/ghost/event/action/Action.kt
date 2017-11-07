@@ -1,5 +1,7 @@
 package net.lethal.ghost.event.action
 
 interface Action {
-    val name: String
+    val type: ActionType
+
+    fun execute()
 }
