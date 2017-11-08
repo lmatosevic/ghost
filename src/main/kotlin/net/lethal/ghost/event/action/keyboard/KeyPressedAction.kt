@@ -4,16 +4,16 @@ import net.lethal.ghost.event.action.AbstractAction
 import net.lethal.ghost.event.action.Action
 import net.lethal.ghost.event.action.ActionType
 
-class KeyPressedAction(private val keyCode: Int?) : AbstractAction(), Action {
+class KeyPressedAction(private val rawKeyCode: Int?) : AbstractAction(), Action {
     override val type: ActionType = ActionType.KEY_PRESSED
 
     override fun execute() {
-        if (keyCode != null) {
-            robot.keyPress(keyCode)
+        if (rawKeyCode != null) {
+            robot.keyPress(rawKeyCode)
         }
     }
 
     override fun toString(): String {
-        return "Key $keyCode pressed"
+        return "Key $rawKeyCode pressed"
     }
 }

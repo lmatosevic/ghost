@@ -1,17 +1,17 @@
 package net.lethal.ghost.service.impl
 
+import net.lethal.ghost.app.Context
 import net.lethal.ghost.event.Event
 import net.lethal.ghost.event.EventSubscriber
 import net.lethal.ghost.service.LoggerService
 import net.lethal.ghost.service.ScenarioHolderService
-import tornadofx.*
 
-class ScenarioHolderServiceImpl : Component(), ScenarioHolderService, EventSubscriber {
+class ScenarioHolderServiceImpl : ScenarioHolderService, EventSubscriber {
     private val events: MutableList<Event> = arrayListOf()
 
-    private val logger: LoggerService by di()
-    private val keyboardListener: KeyboardListenerService by di()
-    private val mouseListener: MouseListenerService by di()
+    private val logger: LoggerService by Context.di()
+    private val keyboardListener: KeyboardListenerService by Context.di()
+    private val mouseListener: MouseListenerService by Context.di()
 
     init {
         keyboardListener.addSubscriber(this)
@@ -23,7 +23,10 @@ class ScenarioHolderServiceImpl : Component(), ScenarioHolderService, EventSubsc
     }
 
     override fun execute() {
-        events.forEach { it.action.execute() }
+        events.forEach {
+            it.action.execute()
+            logger.warning(it.action.toString())
+        }
     }
 
     override fun clear() {

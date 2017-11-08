@@ -9,4 +9,8 @@ class MouseDraggedAction : AbstractAction(), Action {
 
     override fun execute() {
     }
+
+    override fun toString(): String {
+        return "Dragged"
+    }
 }

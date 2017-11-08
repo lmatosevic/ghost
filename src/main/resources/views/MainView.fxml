@@ -14,7 +14,7 @@
     <children>
         <HBox prefHeight="100.0" prefWidth="200.0" spacing="10.0">
             <children>
-                <Button contentDisplay="GRAPHIC_ONLY" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#play" prefHeight="136.0" prefWidth="142.0" text="Play" HBox.hgrow="ALWAYS">
+                <Button fx:id="playBtn" accessibleRole="TOGGLE_BUTTON" contentDisplay="GRAPHIC_ONLY" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#play" prefHeight="136.0" prefWidth="142.0" text="Play" HBox.hgrow="ALWAYS">
                     <tooltip>
                         <Tooltip text="Play" />
                     </tooltip>
@@ -24,7 +24,7 @@
                         </ImageView>
                     </graphic>
                 </Button>
-                <Button contentDisplay="GRAPHIC_ONLY" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#pause" prefHeight="136.0" prefWidth="142.0" text="Pause" HBox.hgrow="ALWAYS">
+                <Button fx:id="pauseBtn" accessibleRole="TOGGLE_BUTTON" contentDisplay="GRAPHIC_ONLY" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#pause" prefHeight="136.0" prefWidth="142.0" text="Pause" HBox.hgrow="ALWAYS">
                     <tooltip>
                         <Tooltip text="Pause" />
                     </tooltip>
@@ -34,7 +34,7 @@
                         </ImageView>
                     </graphic>
                 </Button>
-                <Button contentDisplay="GRAPHIC_ONLY" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#stop" prefHeight="136.0" prefWidth="142.0" text="Stop" HBox.hgrow="ALWAYS">
+                <Button fx:id="stopBtn" contentDisplay="GRAPHIC_ONLY" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#stop" prefHeight="136.0" prefWidth="142.0" text="Stop" HBox.hgrow="ALWAYS">
                     <tooltip>
                         <Tooltip text="Stop" />
                     </tooltip>
@@ -44,7 +44,7 @@
                         </ImageView>
                     </graphic>
                 </Button>
-                <Button contentDisplay="GRAPHIC_ONLY" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#record" prefHeight="136.0" prefWidth="142.0" text="Record" HBox.hgrow="ALWAYS">
+                <Button fx:id="recordBtn" accessibleRole="TOGGLE_BUTTON" contentDisplay="GRAPHIC_ONLY" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#record" prefHeight="136.0" prefWidth="142.0" text="Record" HBox.hgrow="ALWAYS">
                     <tooltip>
                         <Tooltip text="Record" />
                     </tooltip>
@@ -57,7 +57,7 @@
                   <Insets />
                </HBox.margin>
                 </Button>
-                <Button contentDisplay="GRAPHIC_ONLY" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#save" prefHeight="136.0" prefWidth="142.0" text="Save" HBox.hgrow="ALWAYS">
+                <Button fx:id="saveBtn" contentDisplay="GRAPHIC_ONLY" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#save" prefHeight="136.0" prefWidth="142.0" text="Save" HBox.hgrow="ALWAYS">
                     <tooltip>
                         <Tooltip text="Save" />
                     </tooltip>
@@ -70,7 +70,7 @@
                   <Insets left="50.0" />
                </HBox.margin>
                 </Button>
-                <Button contentDisplay="GRAPHIC_ONLY" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#open" prefHeight="136.0" prefWidth="142.0" text="Open" HBox.hgrow="ALWAYS">
+                <Button fx:id="openBtn" contentDisplay="GRAPHIC_ONLY" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#open" prefHeight="136.0" prefWidth="142.0" text="Open" HBox.hgrow="ALWAYS">
                     <tooltip>
                         <Tooltip text="Open" />
                     </tooltip>

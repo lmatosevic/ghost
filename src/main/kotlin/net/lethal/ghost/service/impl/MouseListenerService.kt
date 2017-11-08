@@ -4,13 +4,11 @@ import net.lethal.ghost.event.Event
 import net.lethal.ghost.event.EventSubscriber
 import net.lethal.ghost.event.action.mouse.*
 import net.lethal.ghost.event.type.MouseEvent
-import net.lethal.ghost.service.LoggerService
 import org.jnativehook.GlobalScreen
 import org.jnativehook.mouse.*
 import java.util.*
 
 class MouseListenerService : ListenerService(), NativeMouseInputListener, NativeMouseMotionListener, NativeMouseWheelListener {
-    private val logger: LoggerService by di()
 
     override fun registerSelf() {
         GlobalScreen.addNativeMouseListener(this)

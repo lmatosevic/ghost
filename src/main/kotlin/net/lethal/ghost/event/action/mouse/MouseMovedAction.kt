@@ -9,4 +9,8 @@ class MouseMovedAction : AbstractAction(), Action {
 
     override fun execute() {
     }
+
+    override fun toString(): String {
+        return "Moved"
+    }
 }

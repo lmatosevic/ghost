@@ -4,16 +4,16 @@ import net.lethal.ghost.event.action.AbstractAction
 import net.lethal.ghost.event.action.Action
 import net.lethal.ghost.event.action.ActionType
 
-class KeyReleasedAction(private val keyCode: Int?) : AbstractAction(), Action {
+class KeyReleasedAction(private val rawKeyCode: Int?) : AbstractAction(), Action {
     override val type: ActionType = ActionType.KEY_RELEASED
 
     override fun execute() {
-        if (keyCode != null) {
-            robot.keyRelease(keyCode)
+        if (rawKeyCode != null) {
+            robot.keyRelease(rawKeyCode)
         }
     }
 
     override fun toString(): String {
-        return "Key $keyCode released"
+        return "Key $rawKeyCode released"
     }
 }

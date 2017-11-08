@@ -1,12 +1,11 @@
 package net.lethal.ghost.controller
 
-import javafx.scene.effect.Light
-import javafx.scene.effect.Lighting
+import javafx.scene.control.Button
 import javafx.scene.image.ImageView
 import javafx.scene.layout.VBox
-import javafx.scene.paint.Color
 import net.lethal.ghost.app.Context
-import net.lethal.ghost.event.DeviceType
+import net.lethal.ghost.component.ButtonInteractionComponent
+import net.lethal.ghost.component.ImageInteractionComponent
 import net.lethal.ghost.event.Event
 import net.lethal.ghost.event.EventSubscriber
 import net.lethal.ghost.service.LoggerService
@@ -17,32 +16,33 @@ import tornadofx.*
 
 class MainController : View(Context.windowName), EventSubscriber {
     override val root: VBox = loadFXML("/views/MainView.fxml", true)
+
     private val keyboardImg: ImageView by fxid()
     private val mouseImg: ImageView by fxid()
-    private val lightingEffect: Lighting
+    private val playBtn: Button by fxid()
+    private val pauseBtn: Button by fxid()
+    private val stopBtn: Button by fxid()
+    private val recordBtn: Button by fxid()
+    private val saveBtn: Button by fxid()
+    private val openBtn: Button by fxid()
 
-    private val logger: LoggerService by di()
-    private val keyboardListener: KeyboardListenerService by di()
-    private val mouseListener: MouseListenerService by di()
-    private val scenarioHolder: ScenarioHolderService by di()
+    private val logger: LoggerService by Context.di()
+    private val keyboardListener: KeyboardListenerService by Context.di()
+    private val mouseListener: MouseListenerService by Context.di()
+    private val scenarioHolder: ScenarioHolderService by Context.di()
 
-    private var mouseLastEvent: Long = System.currentTimeMillis()
-    private var keyboardLastEvent: Long = System.currentTimeMillis()
+    private val imageInteractionComponent: ImageInteractionComponent
+    private val buttonInteractionComponent: ButtonInteractionComponent
 
     init {
         keyboardListener.addSubscriber(this)
         mouseListener.addSubscriber(this)
-
-        val lighting = Lighting(Light.Distant(45.0, 45.0, Color.web("#4191e0")))
-        lighting.diffuseConstant = 0.51
-        lighting.specularConstant = 1.23
-        lighting.specularExponent = 0.93
-        lighting.surfaceScale = 3.36
-        lightingEffect = lighting
+        imageInteractionComponent = ImageInteractionComponent(keyboardImg, mouseImg)
+        buttonInteractionComponent = ButtonInteractionComponent(playBtn, pauseBtn, stopBtn, recordBtn, saveBtn, openBtn)
     }
 
     override fun onEvent(event: Event) {
-        changeImageColor(event.device)
+        imageInteractionComponent.changeImageColor(event.device)
     }
 
     fun play() {
@@ -50,6 +50,9 @@ class MainController : View(Context.windowName), EventSubscriber {
         if (keyboardListener.paused && mouseListener.paused) {
             keyboardListener.start()
             mouseListener.start()
+        }
+        if (!keyboardListener.started && !mouseListener.started){
+            scenarioHolder.execute()
         }
     }
 
@@ -79,32 +82,5 @@ class MainController : View(Context.windowName), EventSubscriber {
     fun open() {
         logger.info("Open pressed")
         scenarioHolder.load()
-    }
-
-    private fun changeImageColor(deviceType: DeviceType) {
-        val imageView: ImageView
-        when (deviceType) {
-            DeviceType.KEYBOARD -> {
-                keyboardLastEvent = System.currentTimeMillis()
-                imageView = keyboardImg
-            }
-            DeviceType.MOUSE -> {
-                mouseLastEvent = System.currentTimeMillis()
-                imageView = mouseImg
-            }
-        }
-
-        if (imageView.effect == null) {
-            imageView.effect = lightingEffect
-        }
-
-        runAsync {
-            Thread.sleep(300)
-        } ui {
-            val lastEvent = if (deviceType == DeviceType.KEYBOARD) keyboardLastEvent else mouseLastEvent
-            if (lastEvent < System.currentTimeMillis() - 50) {
-                imageView.effect = null
-            }
-        }
     }
 }

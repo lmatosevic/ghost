@@ -1,12 +1,11 @@
 package net.lethal.ghost.service.impl
 
 import net.lethal.ghost.event.Event
-import net.lethal.ghost.event.EventSubscriber
 import net.lethal.ghost.event.EventProvider
+import net.lethal.ghost.event.EventSubscriber
 import net.lethal.ghost.service.LifecycleService
-import tornadofx.*
 
-abstract class ListenerService : Component(), LifecycleService, EventProvider {
+abstract class ListenerService : LifecycleService, EventProvider {
     var started = false
     var paused = false
 

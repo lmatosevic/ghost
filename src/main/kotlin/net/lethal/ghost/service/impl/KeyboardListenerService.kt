@@ -1,5 +1,6 @@
 package net.lethal.ghost.service.impl
 
+import net.lethal.ghost.app.Context
 import net.lethal.ghost.event.Event
 import net.lethal.ghost.event.EventSubscriber
 import net.lethal.ghost.event.action.keyboard.KeyPressedAction
@@ -12,7 +13,7 @@ import org.jnativehook.keyboard.NativeKeyListener
 import java.util.*
 
 class KeyboardListenerService : ListenerService(), NativeKeyListener {
-    private val logger: LoggerService by di()
+    private val logger: LoggerService by Context.di()
 
     override fun registerSelf() {
         GlobalScreen.addNativeKeyListener(this)
@@ -28,12 +29,12 @@ class KeyboardListenerService : ListenerService(), NativeKeyListener {
 
     override fun nativeKeyPressed(event: NativeKeyEvent?) {
         if (paused) return
-        notifySubscribers(KeyboardEvent(Date(), Date(), KeyPressedAction(event?.keyCode)))
+        notifySubscribers(KeyboardEvent(Date(), Date(), KeyPressedAction(event?.rawCode)))
     }
 
     override fun nativeKeyReleased(event: NativeKeyEvent?) {
         if (paused) return
-        notifySubscribers(KeyboardEvent(Date(), Date(), KeyReleasedAction(event?.keyCode)))
+        notifySubscribers(KeyboardEvent(Date(), Date(), KeyReleasedAction(event?.rawCode)))
     }
 
     override fun nativeKeyTyped(event: NativeKeyEvent?) {
