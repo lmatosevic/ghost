@@ -10,7 +10,6 @@ import net.lethal.ghost.service.LoggerService
 import org.jnativehook.GlobalScreen
 import org.jnativehook.keyboard.NativeKeyEvent
 import org.jnativehook.keyboard.NativeKeyListener
-import java.util.*
 
 class KeyboardListenerService : ListenerService(), NativeKeyListener {
     private val logger: LoggerService by Context.di()
@@ -28,16 +27,24 @@ class KeyboardListenerService : ListenerService(), NativeKeyListener {
     }
 
     override fun nativeKeyPressed(event: NativeKeyEvent?) {
-        if (paused) return
-        notifySubscribers(KeyboardEvent(Date(), Date(), KeyPressedAction(event?.rawCode)))
+        val rawCode = event?.rawCode
+        if (paused || keyMapPressedTimestamp.containsKey(rawCode)) return
+        keyMapPressedTimestamp.put(rawCode!!, System.currentTimeMillis())
+        notifySubscribers(KeyboardEvent(order.getAndIncrement(), 50, KeyPressedAction(rawCode)))
     }
 
     override fun nativeKeyReleased(event: NativeKeyEvent?) {
-        if (paused) return
-        notifySubscribers(KeyboardEvent(Date(), Date(), KeyReleasedAction(event?.rawCode)))
+        val rawCode = event?.rawCode
+        if (paused || !keyMapPressedTimestamp.containsKey(rawCode)) return
+        keyMapPressedTimestamp.remove(rawCode!!)
+        notifySubscribers(KeyboardEvent(order.getAndIncrement(), 50, KeyReleasedAction(rawCode)))
     }
 
     override fun nativeKeyTyped(event: NativeKeyEvent?) {
         // ignored
+    }
+
+    companion object {
+        val keyMapPressedTimestamp: MutableMap<Int, Long> = hashMapOf()
     }
 }

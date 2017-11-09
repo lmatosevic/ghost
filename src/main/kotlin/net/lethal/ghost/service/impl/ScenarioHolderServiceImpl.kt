@@ -25,7 +25,6 @@ class ScenarioHolderServiceImpl : ScenarioHolderService, EventSubscriber {
     override fun execute() {
         events.forEach {
             it.action.execute()
-            logger.warning(it.action.toString())
         }
     }
 

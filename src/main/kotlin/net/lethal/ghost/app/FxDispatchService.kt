@@ -1,11 +1,11 @@
-package net.lethal.ghost.service.impl
+package net.lethal.ghost.app
 
 import javafx.application.Platform
 import java.util.*
 import java.util.concurrent.AbstractExecutorService
 import java.util.concurrent.TimeUnit
 
-class NativeDispatchService : AbstractExecutorService() {
+class FxDispatchService : AbstractExecutorService() {
     private var running = false
 
     init {

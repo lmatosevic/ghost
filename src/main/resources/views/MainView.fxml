@@ -95,12 +95,12 @@
                 <Insets top="10.0" />
             </padding>
         </HBox>
-      <TableView prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
+      <TableView fx:id="eventTable" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
         <columns>
-          <TableColumn prefWidth="75.0" text="Time Start" />
-            <TableColumn prefWidth="75.0" text="Time End" />
-          <TableColumn prefWidth="75.0" text="Device" />
-            <TableColumn prefWidth="75.0" text="Action" />
+          <TableColumn fx:id="orderColumn" maxWidth="850.0" prefWidth="40.0" text="#" />
+            <TableColumn fx:id="durationColumn" prefWidth="259.0" text="Duration" />
+          <TableColumn fx:id="deviceColumn" prefWidth="75.0" text="Device" />
+            <TableColumn fx:id="actionColumn" prefWidth="75.0" text="Action" />
         </columns>
          <VBox.margin>
             <Insets top="20.0" />

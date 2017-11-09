@@ -32,6 +32,9 @@ class ImageInteractionComponent(private val keyboardImg: ImageView, private val 
                 mouseLastEvent = System.currentTimeMillis()
                 imageView = mouseImg
             }
+            else -> {
+                return
+            }
         }
 
         if (imageView.effect == null) {

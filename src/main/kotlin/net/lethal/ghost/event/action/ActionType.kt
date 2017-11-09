@@ -7,5 +7,6 @@ enum class ActionType {
     MOUSE_MOVED,
     MOUSE_PRESSED,
     MOUSE_RELEASED,
-    MOUSE_WHEEL
+    MOUSE_WHEEL,
+    WAIT
 }

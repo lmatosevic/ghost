@@ -7,6 +7,4 @@ class ButtonInteractionComponent(private val playBtn: Button, private val pauseB
                                  private val stopBtn: Button, private val recordBtn: Button,
                                  private val saveBtn: Button, private val openBtn: Button) : Component() {
 
-    // TODO: state machine for button management
-
 }

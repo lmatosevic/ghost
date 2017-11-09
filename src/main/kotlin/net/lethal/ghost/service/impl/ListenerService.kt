@@ -4,6 +4,7 @@ import net.lethal.ghost.event.Event
 import net.lethal.ghost.event.EventProvider
 import net.lethal.ghost.event.EventSubscriber
 import net.lethal.ghost.service.LifecycleService
+import java.util.concurrent.atomic.AtomicInteger
 
 abstract class ListenerService : LifecycleService, EventProvider {
     var started = false
@@ -14,6 +15,7 @@ abstract class ListenerService : LifecycleService, EventProvider {
     override fun start() {
         if (!started && !paused) {
             registerSelf()
+            order.set(1)
         }
         started = true
         paused = false
@@ -49,4 +51,9 @@ abstract class ListenerService : LifecycleService, EventProvider {
     abstract fun registerSelf()
 
     abstract fun removeSelf()
+
+    companion object {
+        @JvmStatic
+        var order: AtomicInteger = AtomicInteger(1)
+    }
 }

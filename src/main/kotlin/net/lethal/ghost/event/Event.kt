@@ -4,9 +4,9 @@ import net.lethal.ghost.event.action.Action
 import java.util.*
 
 interface Event {
-    val timeStart: Date
+    val order: Int
 
-    val timeEnd: Date
+    val duration: Long
 
     val action: Action
 

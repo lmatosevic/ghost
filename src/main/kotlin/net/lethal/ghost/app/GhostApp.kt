@@ -9,7 +9,6 @@ import javafx.application.Platform
 import net.lethal.ghost.config.Configuration
 import net.lethal.ghost.controller.MainController
 import net.lethal.ghost.service.LoggerService
-import net.lethal.ghost.service.impl.NativeDispatchService
 import net.lethal.ghost.style.Styles
 import org.jnativehook.GlobalScreen
 import org.jnativehook.NativeHookException
@@ -26,7 +25,7 @@ class GhostApp : App(MainController::class, Styles::class) {
         val logger = Logger.getLogger(GlobalScreen::class.java.`package`.name)
         logger.level = Level.OFF
         logger.useParentHandlers = false
-        GlobalScreen.setEventDispatcher(NativeDispatchService())
+        GlobalScreen.setEventDispatcher(FxDispatchService())
     }
 
     override fun onBeforeShow(view: UIComponent) {
@@ -45,16 +44,13 @@ class GhostApp : App(MainController::class, Styles::class) {
 }
 
 object Context {
-    val guice: Injector
-    val configuration: Configuration
+    private val configuration: Configuration
+    val guice: Injector = Guice.createInjector(GhostModule())
     val windowName: String
 
     init {
-        guice = Guice.createInjector(GhostModule())
         // Eagerly load all instances
-        guice.allBindings.keys.forEach {
-            guice.getInstance(it)
-        }
+        guice.allBindings.keys.forEach { guice.getInstance(it) }
         val mapper = ObjectMapper(YAMLFactory()).registerKotlinModule()
         val yaml = this.javaClass.getResource("/application.yml").readText()
         configuration = mapper.readValue(yaml, Configuration::class.java)
