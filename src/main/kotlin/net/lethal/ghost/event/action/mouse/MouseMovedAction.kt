@@ -9,7 +9,7 @@ class MouseMovedAction(private val x: Int, private val y: Int) : AbstractAction(
 
     override fun execute() {
         robot.mouseMove(x, y)
-        robot.delay(2)
+        robot.delay(3)
     }
 
     override fun toString(): String {

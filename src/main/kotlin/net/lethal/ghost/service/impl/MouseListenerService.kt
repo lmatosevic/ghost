@@ -63,8 +63,8 @@ class MouseListenerService : ListenerService(), NativeMouseInputListener, Native
     private fun toRawMouseButton(button: Int): Int {
         return when (button) {
             1 -> InputEvent.BUTTON1_MASK
-            2 -> InputEvent.BUTTON2_MASK
-            3 -> InputEvent.BUTTON3_MASK
+            2 -> InputEvent.BUTTON3_MASK
+            3 -> InputEvent.BUTTON2_MASK
             else -> 0
         }
     }
