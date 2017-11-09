@@ -9,7 +9,7 @@ class MouseWheelAction(private val rotation: Int) : AbstractAction(), Action {
 
     override fun execute() {
         robot.mouseWheel(rotation)
-        robot.delay(10)
+        robot.delay(30)
     }
 
     override fun toString(): String {
