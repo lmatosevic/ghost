@@ -8,7 +8,10 @@ class WaitAction(private val delay: Int) : AbstractAction(), Action {
     override val type: ActionType = ActionType.WAIT
 
     override fun execute() {
-        robot.delay(delay)
+        val iterations = delay / 100
+        for (i in 1..iterations) {
+            robot.delay(100)
+        }
     }
 
     override fun toString(): String {
