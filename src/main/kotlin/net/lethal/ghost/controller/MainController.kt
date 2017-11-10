@@ -64,7 +64,9 @@ class MainController : View(Context.windowName), EventSubscriber {
             mouseListener.start()
         }
         if (!keyboardListener.started && !mouseListener.started) {
-            scenarioHolder.execute()
+            runAsync {
+                scenarioHolder.execute()
+            }
         }
     }
 
