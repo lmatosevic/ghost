@@ -3,10 +3,7 @@ package net.lethal.ghost.service.impl
 import net.lethal.ghost.app.Context
 import net.lethal.ghost.event.Event
 import net.lethal.ghost.event.EventSubscriber
-import net.lethal.ghost.event.action.mouse.MouseMovedAction
-import net.lethal.ghost.event.action.mouse.MousePressedAction
-import net.lethal.ghost.event.action.mouse.MouseReleasedAction
-import net.lethal.ghost.event.action.mouse.MouseWheelAction
+import net.lethal.ghost.event.action.mouse.*
 import net.lethal.ghost.event.type.MouseEvent
 import net.lethal.ghost.service.LoggerService
 import org.jnativehook.GlobalScreen
@@ -34,26 +31,29 @@ class MouseListenerService : ListenerService(), NativeMouseInputListener, Native
 
     override fun nativeMouseMoved(event: NativeMouseEvent?) {
         if (paused) return
-        notifySubscribers(MouseEvent(order.getAndIncrement(), 100, MouseMovedAction(event?.x!!, event.y)))
+        notifySubscribers(MouseEvent(order.getAndIncrement(), 3, MouseMovedAction(event?.x!!, event.y)))
     }
 
     override fun nativeMousePressed(event: NativeMouseEvent?) {
-        if (paused) return
-        notifySubscribers(MouseEvent(order.getAndIncrement(), 100, MousePressedAction(toRawMouseButton(event!!.button))))
+        val rawButton = toRawMouseButton(event!!.button)
+        if (paused || rawButton == 0) return
+        notifySubscribers(MouseEvent(order.getAndIncrement(), 50, MousePressedAction(rawButton)))
     }
 
     override fun nativeMouseReleased(event: NativeMouseEvent?) {
-        if (paused) return
-        notifySubscribers(MouseEvent(order.getAndIncrement(), 100, MouseReleasedAction(toRawMouseButton(event!!.button))))
+        val rawButton = toRawMouseButton(event!!.button)
+        if (paused || rawButton == 0) return
+        notifySubscribers(MouseEvent(order.getAndIncrement(), 50, MouseReleasedAction(rawButton)))
     }
 
     override fun nativeMouseWheelMoved(event: NativeMouseWheelEvent?) {
         if (paused) return
-        notifySubscribers(MouseEvent(order.getAndIncrement(), 100, MouseWheelAction(event!!.wheelRotation)))
+        notifySubscribers(MouseEvent(order.getAndIncrement(), 30, MouseWheelAction(event!!.wheelRotation)))
     }
 
     override fun nativeMouseDragged(event: NativeMouseEvent?) {
-        // Unused
+        if (paused) return
+        notifySubscribers(MouseEvent(order.getAndIncrement(), 3, MouseDraggedAction(event?.x!!, event.y)))
     }
 
     override fun nativeMouseClicked(event: NativeMouseEvent?) {
