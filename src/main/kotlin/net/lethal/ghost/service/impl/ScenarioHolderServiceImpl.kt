@@ -24,7 +24,11 @@ class ScenarioHolderServiceImpl : ScenarioHolderService, EventSubscriber {
 
     override fun execute() {
         events.forEach {
-            it.action.execute()
+            try {
+                it.action.execute()
+            } catch (e: IllegalArgumentException) {
+                logger.error("Execution failed for action \"${it.action}\"")
+            }
         }
     }
 
