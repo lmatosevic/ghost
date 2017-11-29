@@ -44,6 +44,8 @@ class MainController : View(Context.windowName), EventSubscriber {
     private val buttonInteractionComponent: ButtonInteractionComponent
     private val tableInteractionComponent: TableInteractionComponent
 
+    private var lastClickRemoved: Boolean = false
+
     init {
         keyboardListener.addSubscriber(this)
         mouseListener.addSubscriber(this)
@@ -61,6 +63,7 @@ class MainController : View(Context.windowName), EventSubscriber {
         if (keyboardListener.paused && mouseListener.paused) {
             keyboardListener.start()
             mouseListener.start()
+            lastClickRemoved = false
         }
         if (!keyboardListener.started && !mouseListener.started) {
             runAsync {
@@ -70,19 +73,15 @@ class MainController : View(Context.windowName), EventSubscriber {
     }
 
     fun pause() {
-        if (!keyboardListener.paused && !mouseListener.paused) {
-            val lastClick = scenarioHolder.removeLastClick()
-            tableInteractionComponent.removeLastClick(lastClick.first, lastClick.second)
+        removeLastClick()
+        if (keyboardListener.started && mouseListener.started) {
+            keyboardListener.pause()
+            mouseListener.pause()
         }
-        keyboardListener.pause()
-        mouseListener.pause()
     }
 
     fun stop() {
-        if (keyboardListener.started && mouseListener.started) {
-            val lastClick = scenarioHolder.removeLastClick()
-            tableInteractionComponent.removeLastClick(lastClick.first, lastClick.second)
-        }
+        removeLastClick()
         keyboardListener.stop()
         mouseListener.stop()
     }
@@ -94,6 +93,7 @@ class MainController : View(Context.windowName), EventSubscriber {
         }
         keyboardListener.start()
         mouseListener.start()
+        lastClickRemoved = false
     }
 
     fun save() {
@@ -102,5 +102,13 @@ class MainController : View(Context.windowName), EventSubscriber {
 
     fun open() {
         scenarioHolder.load()
+    }
+
+    private fun removeLastClick() {
+        if (!lastClickRemoved) {
+            val lastClick = scenarioHolder.removeLastClick()
+            tableInteractionComponent.removeLastClick(lastClick.first, lastClick.second)
+            lastClickRemoved = true
+        }
     }
 }
