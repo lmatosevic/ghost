@@ -28,4 +28,9 @@ class TableInteractionComponent(eventTable: TableView<Event>, orderColumn: Table
     fun clearRows() {
         rows.clear()
     }
+
+    fun removeLastClick(release: Event?, click: Event?) {
+        rows.remove(release)
+        rows.remove(click)
+    }
 }

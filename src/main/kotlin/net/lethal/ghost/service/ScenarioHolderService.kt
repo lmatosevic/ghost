@@ -1,5 +1,7 @@
 package net.lethal.ghost.service
 
+import net.lethal.ghost.event.Event
+
 interface ScenarioHolderService {
 
     fun execute()
@@ -9,4 +11,6 @@ interface ScenarioHolderService {
     fun save()
 
     fun load()
+
+    fun removeLastClick(): Pair<Event?, Event?>
 }

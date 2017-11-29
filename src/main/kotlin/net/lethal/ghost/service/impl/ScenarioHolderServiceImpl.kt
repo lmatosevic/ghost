@@ -3,6 +3,7 @@ package net.lethal.ghost.service.impl
 import net.lethal.ghost.app.Context
 import net.lethal.ghost.event.Event
 import net.lethal.ghost.event.EventSubscriber
+import net.lethal.ghost.event.action.ActionType
 import net.lethal.ghost.service.LoggerService
 import net.lethal.ghost.service.ScenarioHolderService
 
@@ -42,5 +43,26 @@ class ScenarioHolderServiceImpl : ScenarioHolderService, EventSubscriber {
 
     override fun load() {
         logger.info("Scenario loaded...")
+    }
+
+    override fun removeLastClick(): Pair<Event?, Event?> {
+        var release: Event? = null
+        var click: Event? = null
+        if (events.size >= 2) {
+            for (event in events.reversed()) {
+                if (event.action.type != ActionType.MOUSE_PRESSED && event.action.type != ActionType.MOUSE_RELEASED) {
+                    continue
+                }
+                if (release != null) {
+                    click = event
+                    break
+                } else {
+                    release = event
+                }
+            }
+            events.remove(release)
+            events.remove(click)
+        }
+        return Pair(release, click)
     }
 }

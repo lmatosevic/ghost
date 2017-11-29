@@ -58,7 +58,6 @@ class MainController : View(Context.windowName), EventSubscriber {
     }
 
     fun play() {
-        logger.info("Play pressed")
         if (keyboardListener.paused && mouseListener.paused) {
             keyboardListener.start()
             mouseListener.start()
@@ -71,19 +70,24 @@ class MainController : View(Context.windowName), EventSubscriber {
     }
 
     fun pause() {
-        logger.info("Pause pressed")
+        if (!keyboardListener.paused && !mouseListener.paused) {
+            val lastClick = scenarioHolder.removeLastClick()
+            tableInteractionComponent.removeLastClick(lastClick.first, lastClick.second)
+        }
         keyboardListener.pause()
         mouseListener.pause()
     }
 
     fun stop() {
-        logger.info("Stop pressed")
+        if (keyboardListener.started && mouseListener.started) {
+            val lastClick = scenarioHolder.removeLastClick()
+            tableInteractionComponent.removeLastClick(lastClick.first, lastClick.second)
+        }
         keyboardListener.stop()
         mouseListener.stop()
     }
 
     fun record() {
-        logger.info("Record pressed")
         if (!keyboardListener.started && !mouseListener.started) {
             scenarioHolder.clear()
             tableInteractionComponent.clearRows()
@@ -93,12 +97,10 @@ class MainController : View(Context.windowName), EventSubscriber {
     }
 
     fun save() {
-        logger.info("Save pressed")
         scenarioHolder.save()
     }
 
     fun open() {
-        logger.info("Open pressed")
         scenarioHolder.load()
     }
 }
