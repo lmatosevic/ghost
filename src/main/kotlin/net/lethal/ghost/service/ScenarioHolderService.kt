@@ -1,6 +1,7 @@
 package net.lethal.ghost.service
 
 import net.lethal.ghost.event.Event
+import java.io.File
 
 interface ScenarioHolderService {
 
@@ -8,9 +9,9 @@ interface ScenarioHolderService {
 
     fun clear()
 
-    fun save()
+    fun save(file: File)
 
-    fun load()
+    fun load(file: File)
 
     fun removeLastClick(): Pair<Event?, Event?>
 }

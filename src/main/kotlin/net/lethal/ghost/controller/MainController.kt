@@ -5,6 +5,7 @@ import javafx.scene.control.TableColumn
 import javafx.scene.control.TableView
 import javafx.scene.image.ImageView
 import javafx.scene.layout.VBox
+import javafx.stage.FileChooser
 import net.lethal.ghost.app.Context
 import net.lethal.ghost.component.ButtonInteractionComponent
 import net.lethal.ghost.component.ImageInteractionComponent
@@ -16,6 +17,7 @@ import net.lethal.ghost.service.ScenarioHolderService
 import net.lethal.ghost.service.impl.KeyboardListenerService
 import net.lethal.ghost.service.impl.MouseListenerService
 import tornadofx.*
+import java.io.File
 
 class MainController : View(Context.windowName), EventSubscriber {
     override val root: VBox = loadFXML("/views/MainView.fxml", true)
@@ -97,11 +99,24 @@ class MainController : View(Context.windowName), EventSubscriber {
     }
 
     fun save() {
-        scenarioHolder.save()
+        val file = openFileChooseDialog("Save scenario file", FileChooserMode.Save)
+        if (file != null) {
+            scenarioHolder.save(file)
+        }
     }
 
     fun open() {
-        scenarioHolder.load()
+        val file = openFileChooseDialog("Open scenario file", FileChooserMode.Single)
+        if (file != null) {
+            scenarioHolder.load(file)
+        }
+    }
+
+    private fun openFileChooseDialog(title: String, mode: FileChooserMode): File? {
+        val filters = arrayOf(FileChooser.ExtensionFilter("Ghost file", "*.gh"),
+                FileChooser.ExtensionFilter("All files", "*.*"))
+        val files: List<File> = chooseFile(title, filters, mode)
+        return files.getOrNull(0)
     }
 
     private fun removeLastClick() {
