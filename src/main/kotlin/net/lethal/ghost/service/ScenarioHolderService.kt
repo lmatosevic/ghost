@@ -11,7 +11,7 @@ interface ScenarioHolderService {
 
     fun save(file: File)
 
-    fun load(file: File)
+    fun load(file: File): MutableList<Event>
 
     fun removeLastClick(): Pair<Event?, Event?>
 }

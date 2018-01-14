@@ -12,6 +12,10 @@ class WaitAction(private val delay: Int) : AbstractAction(), Action, Serializabl
         robot.delay(delay)
     }
 
+    fun getDelay(): Int {
+        return delay
+    }
+
     override fun toString(): String {
         return "Wait $delay ms"
     }

@@ -5,8 +5,8 @@ import net.lethal.ghost.event.Event
 import net.lethal.ghost.event.EventSubscriber
 import net.lethal.ghost.event.action.ActionType
 import net.lethal.ghost.service.LoggerService
-import net.lethal.ghost.service.ScenarioHolderService
 import net.lethal.ghost.service.ScenarioFileService
+import net.lethal.ghost.service.ScenarioHolderService
 import java.io.File
 
 class ScenarioHolderServiceImpl : ScenarioHolderService, EventSubscriber {
@@ -46,13 +46,12 @@ class ScenarioHolderServiceImpl : ScenarioHolderService, EventSubscriber {
         logger.info("Scenario saved as " + file.name)
     }
 
-    override fun load(file: File) {
-        this.events.clear()
+    override fun load(file: File): MutableList<Event> {
         val events: MutableList<Event> = scenarioFileService.loadFromFile(file)
-        events.forEach { event ->
-            onEvent(event)
-        }
+        this.events.clear()
+        this.events.addAll(events)
         logger.info("Scenario loaded from " + file.name)
+        return events
     }
 
     override fun removeLastClick(): Pair<Event?, Event?> {

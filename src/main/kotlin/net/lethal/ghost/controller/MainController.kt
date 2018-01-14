@@ -10,6 +10,7 @@ import net.lethal.ghost.app.Context
 import net.lethal.ghost.component.ButtonInteractionComponent
 import net.lethal.ghost.component.ImageInteractionComponent
 import net.lethal.ghost.component.TableInteractionComponent
+import net.lethal.ghost.event.DeviceType
 import net.lethal.ghost.event.Event
 import net.lethal.ghost.event.EventSubscriber
 import net.lethal.ghost.service.LoggerService
@@ -108,7 +109,11 @@ class MainController : View(Context.windowName), EventSubscriber {
     fun open() {
         val file = openFileChooseDialog("Open scenario file", FileChooserMode.Single)
         if (file != null) {
-            scenarioHolder.load(file)
+            tableInteractionComponent.clearRows()
+            val events = scenarioHolder.load(file)
+            events.forEach { event ->
+                tableInteractionComponent.addRow(event)
+            }
         }
     }
 
