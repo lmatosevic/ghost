@@ -26,3 +26,7 @@ Executable JAR is located in `target/ghost-1.0-SNAPSHOT-jar-with-dependecies.jar
 6. Open - opens the scenario file 
 7. Icons - keyboard and mouse icons are colored blue when they are making some actions (e.g. mouse movement, key pressed)
 8. List - list of all recorded actions from both keyboard and mouse with details
+
+LICENSE
+---
+GNU General Public License
