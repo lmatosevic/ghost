@@ -16,7 +16,7 @@ mvn package
 Executable JAR is located in `target/ghost-1.0-SNAPSHOT-jar-with-dependecies.jar`.
 
 ## Usage
-![alt text](https://raw.githubusercontent.com/Lujo5/ghost/master/resources/app-gui.png)
+![alt text](https://raw.githubusercontent.com/lmatosevic/ghost/master/resources/app-gui.png)
 
 1. Play - when scenario is finished recording or when scenario is loaded from file, you can run it by pressing this button
 2. Pause - used for pausing while recording scenario. (Execution of scenario cannot be paused)
